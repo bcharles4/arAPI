@@ -1,0 +1,98 @@
+import User from "../backend/models/user.model.js";
+import mongoose from "mongoose";
+
+// Passenger Registration
+export const registerUser = async (req, res) => {
+    try {
+        const { name, email, phone, password } = req.body;
+
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists" });
+        }
+
+        // Create new user (password stored in plain text - not recommended for production)
+        const newUser = new User({
+            name,
+            email,
+            phone,
+            password 
+        });
+
+        await newUser.save();
+        res.status(201).json({ message: "User registered successfully", user: newUser });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// User Login
+export const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Find user by email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Check password (plain text comparison - not secure)
+        if (user.password !== password) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
+
+        // Successful login
+        res.status(200).json({ 
+            message: "Login successful", 
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                score: user.score,
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
+// Get all users
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find().select('-password'); // exclude password
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
+// Update user score by name
+export const updateUserScore = async (req, res) => {
+    try {
+        const { name } = req.params;
+        const { score } = req.body;
+
+        // Find user by name and update score
+        const updatedUser = await User.findOneAndUpdate(
+            { name }, // match by name
+            { score }, // update score
+            { new: true } // return the updated document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ message: "Score updated successfully", user: updatedUser });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
