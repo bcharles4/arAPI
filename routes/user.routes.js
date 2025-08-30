@@ -14,7 +14,7 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/', getAllUsers);
 router.put('/score/:name', updateUserScore);
-router.get("/users/name/:name", getUserByName);
+router.get("/name/:name", getUserByName);
 
 
 export default router;
