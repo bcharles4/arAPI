@@ -107,7 +107,7 @@ export const updateUserScore = async (req, res) => {
 export const getUserByName = async (req, res) => {
     try {
         const { name } = req.params;
-        const user = await User.findOne({ name }).select("-password");
+        const user = await User.findOne({ name }).select("-password"); // exclude password
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
