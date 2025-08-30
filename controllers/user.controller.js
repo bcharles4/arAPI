@@ -73,26 +73,33 @@ export const getAllUsers = async (req, res) => {
 
 
 
-// Update user score by name
+// Update user score by name and increment attempts
 export const updateUserScore = async (req, res) => {
     try {
         const { name } = req.params;
         const { score } = req.body;
 
-        // Find user by name and update score
+        // Find user by name, update score, and increment attempts
         const updatedUser = await User.findOneAndUpdate(
-            { name }, // match by name
-            { score }, // update score
-            { new: true } // return the updated document
+            { name },
+            { 
+                score,                // update score
+                $inc: { attempts: 1 } // increment attempts by 1
+            },
+            { new: true }
         );
 
         if (!updatedUser) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        res.status(200).json({ message: "Score updated successfully", user: updatedUser });
+        res.status(200).json({ 
+            message: "Score updated and attempt recorded successfully", 
+            user: updatedUser 
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 

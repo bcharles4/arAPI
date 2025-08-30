@@ -10,6 +10,8 @@ const userSchema = new mongoose.Schema({
     },
     password: { type: String, required: true },
     score: { type: String, default: "0" }, // Default score set to 0
+    attempts: { type: Number, default: 0 } // only count attempts
+
 }, {
     timestamps: true,
 });

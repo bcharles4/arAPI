@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 
+import { registerAdmin, loginAdmin } from "../controllers/admin.controller.js";
+
+
 
 import userRoutes from '../routes/user.routes.js'; // ✅ import user routes
 
@@ -18,6 +21,11 @@ app.use(cors({
 }));
 
 // Routes
+
+// Admin routes
+app.post("/admin/register", registerAdmin);
+app.post("/admin/login", loginAdmin);
+
 
 app.use('/api/users', userRoutes); // ✅ mount user routes here
 
