@@ -116,3 +116,30 @@ export const getUserByName = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+export const updateUserByName = async (req, res) => {
+  try {
+    const { name } = req.params; // user name from URL
+    const updates = req.body;    // fields to update (attempts, score, etc.)
+
+    // Find and update user
+    const user = await User.findOneAndUpdate(
+      { name },        // find by name
+      { $set: updates },
+      { new: true }    // return updated user
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      message: "User updated successfully",
+      user
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
