@@ -16,7 +16,7 @@ router.post('/login', loginUser);
 router.get('/', getAllUsers);
 router.put('/score/:name', updateUserScore);
 router.get("/name/:name", getUserByName);
-router.put("/users/name/:name", updateUserByName); // ✅ edit by name
+router.put("/name/:name", updateUserByName); // ✅ edit by name
 
 
 
