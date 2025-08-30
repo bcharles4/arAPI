@@ -18,7 +18,7 @@ router.get('/', getAllUsers);
 router.put('/score/:name', updateUserScore);
 router.get("/name/:name", getUserByName);
 router.put("/name/:name", updateUserByName); // ✅ edit by name
-router.put("/users/change-password", changePassword);
+router.put("/change-password", changePassword);
 
 
 
