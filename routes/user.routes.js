@@ -3,7 +3,8 @@ import {
   registerUser,
   loginUser,
   getAllUsers,
-  updateUserScore
+  updateUserScore,
+  getUserByName
 } from '../controllers/user.controller.js';
 
 const router = express.Router();
@@ -13,5 +14,7 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/', getAllUsers);
 router.put('/score/:name', updateUserScore);
+router.get("/users/name/:name", getUserByName);
+
 
 export default router;
