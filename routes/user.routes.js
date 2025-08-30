@@ -5,7 +5,8 @@ import {
   getAllUsers,
   updateUserScore,
   getUserByName,
-  updateUserByName
+  updateUserByName,
+  changePassword
 } from '../controllers/user.controller.js';
 
 const router = express.Router();
@@ -17,6 +18,8 @@ router.get('/', getAllUsers);
 router.put('/score/:name', updateUserScore);
 router.get("/name/:name", getUserByName);
 router.put("/name/:name", updateUserByName); // ✅ edit by name
+router.put("/users/change-password", changePassword);
+
 
 
 
