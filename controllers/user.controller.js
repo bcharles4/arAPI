@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 // Passenger Registration
 export const registerUser = async (req, res) => {
     try {
-        const { name, email, phone, password } = req.body;
+        const { name, email, studentId, password } = req.body;
 
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -12,12 +12,12 @@ export const registerUser = async (req, res) => {
             return res.status(400).json({ message: "User already exists" });
         }
 
-        // Create new user (password stored in plain text - not recommended for production)
+        // Create new user (⚠️ store password hashed in production)
         const newUser = new User({
             name,
             email,
-            phone,
-            password 
+            studentId,
+            password
         });
 
         await newUser.save();
