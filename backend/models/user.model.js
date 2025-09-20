@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     studentId: {
         type: String,
         required: true,
-        match: [/^\d{256}$/, "Student ID must be 6 digits"]
+        match: [/^\d{14}$/, "Student ID must be 14 digits with letters"]
     },
 
     password: { type: String, required: true },
