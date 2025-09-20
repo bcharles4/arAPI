@@ -3,11 +3,12 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true, minLength: 5, maxLength: 100 },
     email: { type: String, required: true, unique: true },
-    phone: {
+    studentId: {
         type: String,
         required: true,
-        match: [/^\d{11}$/, "Phone number must be exactly 11 digits"]
+        match: [/^\d{6}$/, "Student ID must be exactly 6 digits"]
     },
+
     password: { type: String, required: true },
     score: { type: String, default: "0" }, // Default score set to 0
     attempts: { type: Number, default: 0 } // only count attempts
